@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "ods-lb4"
+version = "0.1.0"
+description = ""
+authors = ["RuslanUC <dev_ruslan_uc@protonmail.com>"]
+readme = "README.md"
+packages = [{include = "ods_lb4"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+matplotlib = "^3.9.0"
+sympy = "^1.12"
+numpy = "^1.26.4"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
