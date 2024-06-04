@@ -11,6 +11,7 @@ python = "^3.10"
 matplotlib = "^3.9.0"
 sympy = "^1.12"
 numpy = "^1.26.4"
+scipy = "^1.13.1"
 
 
 [build-system]

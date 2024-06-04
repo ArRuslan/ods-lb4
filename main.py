@@ -3,7 +3,7 @@ from math import sqrt
 import numpy as np
 from matplotlib import pyplot as plt
 from sympy import symbols, diff, solve, Symbol
-
+from scipy.stats import f
 
 W = np.array([
     (2.24, 0.07), (1.61, -1.85), (4.66, -1.9), (3.52, -0.42), (1.4, -2.51), (3.88, -2.45), (4.44, -3.12), (4.38, -2.54),
@@ -47,7 +47,8 @@ def find_ssq(Px: Symbol):
     return Ssq
 
 
-def idk() -> None:
+def calculate_best_order() -> int:
+    beta = 0.95
     Pxl = find_polinomial_of_order(1)
     sl = sum([(yi - Pxl.evalf(subs={x: xi})) ** 2 for xi, yi in W])
     sl /= len(W) - 2
@@ -61,19 +62,19 @@ def idk() -> None:
         s2 = min(sl, sc)
 
         Fn = s1 / s2
-        print(f"{i-1}/{i} : {Fn:.3f} ({sl:.3f}, {sc:.3f})")
+        Fcrit = f.ppf(q=beta, dfn=len(W)-2-i, dfd=len(W)-1-i)
+        print(f"Ступінь {i} : Fn={Fn:.3f}, Fкрит={Fcrit:.3f}")
+        if Fn > Fcrit:
+            print("Fn > Fкрит")
+            return i
 
         Pxl, sl = Pxc, sc
 
 
 def main():
-    #idk()
-    #return
-
-    Px = find_polinomial_of_order(4)
-    print(Px)
-
-    #idk(Px, 4)
+    order = calculate_best_order()
+    Px = find_polinomial_of_order(order)
+    print(f"Поліном: {Px}")
 
     x_plot = np.linspace(xs.min(), xs.max())
     y_plot = [Px.evalf(subs={x: x_p}) for x_p in x_plot]
